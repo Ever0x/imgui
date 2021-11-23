@@ -5,12 +5,19 @@ project "ImGui"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+    includedirs
+    {
+        "../ImGui",
+        "%{IncludeDir.GLFW}"
+    }
+
 	files
 	{
 		"imconfig.h",
 		"imgui.h",
 		"imgui.cpp",
 		"imgui_draw.cpp",
+        "imgui_tables.cpp",
 		"imgui_internal.h",
 		"imgui_widgets.cpp",
 		"imstb_rectpack.h",
@@ -23,6 +30,14 @@ project "ImGui"
 		systemversion "latest"
 		cppdialect "C++20"
 		staticruntime "On"
+
+        files
+        {
+            "backends/imgui_impl_glfw.cpp",
+            "backends/imgui_impl_glfw.h",
+            "backends/imgui_impl_opengl3.cpp",
+            "backends/imgui_impl_opengl3.h"
+        }
 
 	filter "system:linux"
 		pic "On"
