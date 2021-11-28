@@ -24,6 +24,10 @@ project "ImGui"
     
 	filter "system:windows"
         systemversion "latest"
+        defines
+        {
+            "IMGUI_API=__declspec(dllexport)"
+        }
      
         
     filter "configurations:Debug"
