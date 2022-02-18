@@ -325,9 +325,9 @@ void ImGui::ShowDemoWindow(bool* p_open)
     if (show_app_about)         { ImGui::ShowAboutWindow(&show_app_about); }
     if (show_app_style_editor)
     {
-        ImGui::Begin("Dear ImGui Style Editor", &show_app_style_editor);
+        ImGui::BeginScene("Dear ImGui Style Editor", &show_app_style_editor);
         ImGui::ShowStyleEditor();
-        ImGui::End();
+        ImGui::EndScene();
     }
 
     // Demonstrate the various window flags. Typically you would just use the default!
@@ -365,10 +365,10 @@ void ImGui::ShowDemoWindow(bool* p_open)
     ImGui::SetNextWindowSize(ImVec2(550, 680), ImGuiCond_FirstUseEver);
 
     // Main body of the Demo window starts here.
-    if (!ImGui::Begin("Dear ImGui Demo", p_open, window_flags))
+    if (!ImGui::BeginScene("Dear ImGui Demo", p_open, window_flags))
     {
         // Early out if the window is collapsed, as an optimization.
-        ImGui::End();
+        ImGui::EndScene();
         return;
     }
 
@@ -606,7 +606,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
 
     // End of ShowDemoWindow()
     ImGui::PopItemWidth();
-    ImGui::End();
+    ImGui::EndScene();
 }
 
 static void ShowDemoWindowWidgets()
@@ -2512,7 +2512,7 @@ static void ShowDemoWindowWidgets()
         {
             // FIXME-DOCK: This window cannot be docked within the ImGui Demo window, this will cause a feedback loop and get them stuck.
             // Could we fix this through an ImGuiWindowClass feature? Or an API call to tag our parent as "don't skip items"?
-            ImGui::Begin("Title bar Hovered/Active tests", &test_window);
+            ImGui::BeginScene("Title bar Hovered/Active tests", &test_window);
             if (ImGui::BeginPopupContextItem()) // <-- This is using IsItemHovered()
             {
                 if (ImGui::MenuItem("Close")) { test_window = false; }
@@ -2522,7 +2522,7 @@ static void ShowDemoWindowWidgets()
                 "IsItemHovered() after begin = %d (== is title bar hovered)\n"
                 "IsItemActive() after begin = %d (== is window being clicked/moved)\n",
                 ImGui::IsItemHovered(), ImGui::IsItemActive());
-            ImGui::End();
+            ImGui::EndScene();
         }
 
         ImGui::TreePop();
@@ -3170,7 +3170,7 @@ static void ShowDemoWindowLayout()
             static float contents_size_x = 300.0f;
             if (explicit_content_size)
                 ImGui::SetNextWindowContentSize(ImVec2(contents_size_x, 0.0f));
-            ImGui::Begin("Horizontal contents size demo window", &show_horizontal_contents_size_demo_window, show_h_scrollbar ? ImGuiWindowFlags_HorizontalScrollbar : 0);
+            ImGui::BeginScene("Horizontal contents size demo window", &show_horizontal_contents_size_demo_window, show_h_scrollbar ? ImGuiWindowFlags_HorizontalScrollbar : 0);
             IMGUI_DEMO_MARKER("Layout/Scrolling/Horizontal contents size demo window");
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(2, 0));
             ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 0));
@@ -3252,7 +3252,7 @@ static void ShowDemoWindowLayout()
                 ImGui::BeginChild("child", ImVec2(0, 0), true);
                 ImGui::EndChild();
             }
-            ImGui::End();
+            ImGui::EndScene();
         }
 
         ImGui::TreePop();
@@ -4366,7 +4366,7 @@ static void ShowDemoWindowTables()
 
             // Demonstrate using clipper for large vertical lists
             ImGuiListClipper clipper;
-            clipper.Begin(1000);
+            clipper.BeginScene(1000);
             while (clipper.Step())
             {
                 for (int row = clipper.DisplayStart; row < clipper.DisplayEnd; row++)
@@ -5164,7 +5164,7 @@ static void ShowDemoWindowTables()
 
             // Demonstrate using clipper for large vertical lists
             ImGuiListClipper clipper;
-            clipper.Begin(items.Size);
+            clipper.BeginScene(items.Size);
             while (clipper.Step())
                 for (int row_n = clipper.DisplayStart; row_n < clipper.DisplayEnd; row_n++)
                 {
@@ -5393,7 +5393,7 @@ static void ShowDemoWindowTables()
 #if 1
             // Demonstrate using clipper for large vertical lists
             ImGuiListClipper clipper;
-            clipper.Begin(items.Size);
+            clipper.BeginScene(items.Size);
             while (clipper.Step())
             {
                 for (int row_n = clipper.DisplayStart; row_n < clipper.DisplayEnd; row_n++)
@@ -5657,7 +5657,7 @@ static void ShowDemoWindowColumns()
         // Also demonstrate using clipper for large vertical lists
         int ITEMS_COUNT = 2000;
         ImGuiListClipper clipper;
-        clipper.Begin(ITEMS_COUNT);
+        clipper.BeginScene(ITEMS_COUNT);
         while (clipper.Step())
         {
             for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
@@ -5907,9 +5907,9 @@ static void ShowDemoWindowMisc()
 
 void ImGui::ShowAboutWindow(bool* p_open)
 {
-    if (!ImGui::Begin("About Dear ImGui", p_open, ImGuiWindowFlags_AlwaysAutoResize))
+    if (!ImGui::BeginScene("About Dear ImGui", p_open, ImGuiWindowFlags_AlwaysAutoResize))
     {
-        ImGui::End();
+        ImGui::EndScene();
         return;
     }
     IMGUI_DEMO_MARKER("Tools/About Dear ImGui");
@@ -6060,7 +6060,7 @@ void ImGui::ShowAboutWindow(bool* p_open)
         }
         ImGui::EndChildFrame();
     }
-    ImGui::End();
+    ImGui::EndScene();
 }
 
 //-----------------------------------------------------------------------------
@@ -6551,9 +6551,9 @@ struct ExampleAppConsole
     void    Draw(const char* title, bool* p_open)
     {
         ImGui::SetNextWindowSize(ImVec2(520, 600), ImGuiCond_FirstUseEver);
-        if (!ImGui::Begin(title, p_open))
+        if (!ImGui::BeginScene(title, p_open))
         {
-            ImGui::End();
+            ImGui::EndScene();
             return;
         }
 
@@ -6682,7 +6682,7 @@ struct ExampleAppConsole
         if (reclaim_focus)
             ImGui::SetKeyboardFocusHere(-1); // Auto focus previous widget
 
-        ImGui::End();
+        ImGui::EndScene();
     }
 
     void    ExecCommand(const char* command_line)
@@ -6884,9 +6884,9 @@ struct ExampleAppLog
 
     void    Draw(const char* title, bool* p_open = NULL)
     {
-        if (!ImGui::Begin(title, p_open))
+        if (!ImGui::BeginScene(title, p_open))
         {
-            ImGui::End();
+            ImGui::EndScene();
             return;
         }
 
@@ -6948,7 +6948,7 @@ struct ExampleAppLog
             // anymore, which is why we don't use the clipper. Storing or skimming through the search result would make
             // it possible (and would be recommended if you want to search through tens of thousands of entries).
             ImGuiListClipper clipper;
-            clipper.Begin(LineOffsets.Size);
+            clipper.BeginScene(LineOffsets.Size);
             while (clipper.Step())
             {
                 for (int line_no = clipper.DisplayStart; line_no < clipper.DisplayEnd; line_no++)
@@ -6958,7 +6958,7 @@ struct ExampleAppLog
                     ImGui::TextUnformatted(line_start, line_end);
                 }
             }
-            clipper.End();
+            clipper.EndScene();
         }
         ImGui::PopStyleVar();
 
@@ -6966,7 +6966,7 @@ struct ExampleAppLog
             ImGui::SetScrollHereY(1.0f);
 
         ImGui::EndChild();
-        ImGui::End();
+        ImGui::EndScene();
     }
 };
 
@@ -6979,7 +6979,7 @@ static void ShowExampleAppLog(bool* p_open)
     // We take advantage of a rarely used feature: multiple calls to Begin()/End() are appending to the _same_ window.
     // Most of the contents of the window will be added by the log.Draw() call.
     ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-    ImGui::Begin("Example: Log", p_open);
+    ImGui::BeginScene("Example: Log", p_open);
     IMGUI_DEMO_MARKER("Examples/Log");
     if (ImGui::SmallButton("[Debug] Add 5 entries"))
     {
@@ -6995,7 +6995,7 @@ static void ShowExampleAppLog(bool* p_open)
             counter++;
         }
     }
-    ImGui::End();
+    ImGui::EndScene();
 
     // Actually call in the regular Log helper (which will Begin() into the same window as we just did)
     log.Draw("Example: Log", p_open);
@@ -7009,7 +7009,7 @@ static void ShowExampleAppLog(bool* p_open)
 static void ShowExampleAppLayout(bool* p_open)
 {
     ImGui::SetNextWindowSize(ImVec2(500, 440), ImGuiCond_FirstUseEver);
-    if (ImGui::Begin("Example: Simple layout", p_open, ImGuiWindowFlags_MenuBar))
+    if (ImGui::BeginScene("Example: Simple layout", p_open, ImGuiWindowFlags_MenuBar))
     {
         IMGUI_DEMO_MARKER("Examples/Simple layout");
         if (ImGui::BeginMenuBar())
@@ -7065,7 +7065,7 @@ static void ShowExampleAppLayout(bool* p_open)
             ImGui::EndGroup();
         }
     }
-    ImGui::End();
+    ImGui::EndScene();
 }
 
 //-----------------------------------------------------------------------------
@@ -7123,9 +7123,9 @@ static void ShowPlaceholderObject(const char* prefix, int uid)
 static void ShowExampleAppPropertyEditor(bool* p_open)
 {
     ImGui::SetNextWindowSize(ImVec2(430, 450), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Example: Property editor", p_open))
+    if (!ImGui::BeginScene("Example: Property editor", p_open))
     {
-        ImGui::End();
+        ImGui::EndScene();
         return;
     }
     IMGUI_DEMO_MARKER("Examples/Property Editor");
@@ -7148,7 +7148,7 @@ static void ShowExampleAppPropertyEditor(bool* p_open)
         ImGui::EndTable();
     }
     ImGui::PopStyleVar();
-    ImGui::End();
+    ImGui::EndScene();
 }
 
 //-----------------------------------------------------------------------------
@@ -7159,9 +7159,9 @@ static void ShowExampleAppPropertyEditor(bool* p_open)
 static void ShowExampleAppLongText(bool* p_open)
 {
     ImGui::SetNextWindowSize(ImVec2(520, 600), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Example: Long text display", p_open))
+    if (!ImGui::BeginScene("Example: Long text display", p_open))
     {
-        ImGui::End();
+        ImGui::EndScene();
         return;
     }
     IMGUI_DEMO_MARKER("Examples/Long text display");
@@ -7195,7 +7195,7 @@ static void ShowExampleAppLongText(bool* p_open)
             // Multiple calls to Text(), manually coarsely clipped - demonstrate how to use the ImGuiListClipper helper.
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
             ImGuiListClipper clipper;
-            clipper.Begin(lines);
+            clipper.BeginScene(lines);
             while (clipper.Step())
                 for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
                     ImGui::Text("%i The quick brown fox jumps over the lazy dog", i);
@@ -7211,7 +7211,7 @@ static void ShowExampleAppLongText(bool* p_open)
         break;
     }
     ImGui::EndChild();
-    ImGui::End();
+    ImGui::EndScene();
 }
 
 //-----------------------------------------------------------------------------
@@ -7221,9 +7221,9 @@ static void ShowExampleAppLongText(bool* p_open)
 // Demonstrate creating a window which gets auto-resized according to its content.
 static void ShowExampleAppAutoResize(bool* p_open)
 {
-    if (!ImGui::Begin("Example: Auto-resizing window", p_open, ImGuiWindowFlags_AlwaysAutoResize))
+    if (!ImGui::BeginScene("Example: Auto-resizing window", p_open, ImGuiWindowFlags_AlwaysAutoResize))
     {
-        ImGui::End();
+        ImGui::EndScene();
         return;
     }
     IMGUI_DEMO_MARKER("Examples/Auto-resizing window");
@@ -7236,7 +7236,7 @@ static void ShowExampleAppAutoResize(bool* p_open)
     ImGui::SliderInt("Number of lines", &lines, 1, 20);
     for (int i = 0; i < lines; i++)
         ImGui::Text("%*sThis is line %d", i * 4, "", i); // Pad with space to extend size horizontally
-    ImGui::End();
+    ImGui::EndScene();
 }
 
 //-----------------------------------------------------------------------------
@@ -7276,7 +7276,7 @@ static void ShowExampleAppConstrainedResize(bool* p_open)
     if (type == 6) ImGui::SetNextWindowSizeConstraints(ImVec2(0, 0),     ImVec2(FLT_MAX, FLT_MAX), CustomConstraints::Step, (void*)(intptr_t)100); // Fixed Step
 
     ImGuiWindowFlags flags = auto_resize ? ImGuiWindowFlags_AlwaysAutoResize : 0;
-    if (ImGui::Begin("Example: Constrained Resize", p_open, flags))
+    if (ImGui::BeginScene("Example: Constrained Resize", p_open, flags))
     {
         IMGUI_DEMO_MARKER("Examples/Constrained Resizing window");
         if (ImGui::IsWindowDocked())
@@ -7292,7 +7292,7 @@ static void ShowExampleAppConstrainedResize(bool* p_open)
         for (int i = 0; i < display_lines; i++)
             ImGui::Text("%*sHello, sailor! Making this line long enough for the example.", i * 4, "");
     }
-    ImGui::End();
+    ImGui::EndScene();
 }
 
 //-----------------------------------------------------------------------------
@@ -7322,7 +7322,7 @@ static void ShowExampleAppSimpleOverlay(bool* p_open)
         window_flags |= ImGuiWindowFlags_NoMove;
     }
     ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
-    if (ImGui::Begin("Example: Simple overlay", p_open, window_flags))
+    if (ImGui::BeginScene("Example: Simple overlay", p_open, window_flags))
     {
         IMGUI_DEMO_MARKER("Examples/Simple Overlay");
         ImGui::Text("Simple overlay\n" "in the corner of the screen.\n" "(right-click to change position)");
@@ -7342,7 +7342,7 @@ static void ShowExampleAppSimpleOverlay(bool* p_open)
             ImGui::EndPopup();
         }
     }
-    ImGui::End();
+    ImGui::EndScene();
 }
 
 //-----------------------------------------------------------------------------
@@ -7361,7 +7361,7 @@ static void ShowExampleAppFullscreen(bool* p_open)
     ImGui::SetNextWindowPos(use_work_area ? viewport->WorkPos : viewport->Pos);
     ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
 
-    if (ImGui::Begin("Example: Fullscreen window", p_open, flags))
+    if (ImGui::BeginScene("Example: Fullscreen window", p_open, flags))
     {
         ImGui::Checkbox("Use work area instead of main area", &use_work_area);
         ImGui::SameLine();
@@ -7378,7 +7378,7 @@ static void ShowExampleAppFullscreen(bool* p_open)
         if (p_open && ImGui::Button("Close this window"))
             *p_open = false;
     }
-    ImGui::End();
+    ImGui::EndScene();
 }
 
 //-----------------------------------------------------------------------------
@@ -7398,23 +7398,23 @@ static void ShowExampleAppWindowTitles(bool*)
 
     // Using "##" to display same title but have unique identifier.
     ImGui::SetNextWindowPos(ImVec2(base_pos.x + 100, base_pos.y + 100), ImGuiCond_FirstUseEver);
-    ImGui::Begin("Same title as another window##1");
+    ImGui::BeginScene("Same title as another window##1");
     IMGUI_DEMO_MARKER("Examples/Manipulating window titles");
     ImGui::Text("This is window 1.\nMy title is the same as window 2, but my identifier is unique.");
-    ImGui::End();
+    ImGui::EndScene();
 
     ImGui::SetNextWindowPos(ImVec2(base_pos.x + 100, base_pos.y + 200), ImGuiCond_FirstUseEver);
-    ImGui::Begin("Same title as another window##2");
+    ImGui::BeginScene("Same title as another window##2");
     ImGui::Text("This is window 2.\nMy title is the same as window 1, but my identifier is unique.");
-    ImGui::End();
+    ImGui::EndScene();
 
     // Using "###" to display a changing title but keep a static identifier "AnimatedTitle"
     char buf[128];
     sprintf(buf, "Animated title %c %d###AnimatedTitle", "|/-\\"[(int)(ImGui::GetTime() / 0.25f) & 3], ImGui::GetFrameCount());
     ImGui::SetNextWindowPos(ImVec2(base_pos.x + 100, base_pos.y + 300), ImGuiCond_FirstUseEver);
-    ImGui::Begin(buf);
+    ImGui::BeginScene(buf);
     ImGui::Text("This window has a changing title.");
-    ImGui::End();
+    ImGui::EndScene();
 }
 
 //-----------------------------------------------------------------------------
@@ -7424,9 +7424,9 @@ static void ShowExampleAppWindowTitles(bool*)
 // Demonstrate using the low-level ImDrawList to draw custom shapes.
 static void ShowExampleAppCustomRendering(bool* p_open)
 {
-    if (!ImGui::Begin("Example: Custom rendering", p_open))
+    if (!ImGui::BeginScene("Example: Custom rendering", p_open))
     {
-        ImGui::End();
+        ImGui::EndScene();
         return;
     }
     IMGUI_DEMO_MARKER("Examples/Custom Rendering");
@@ -7656,7 +7656,7 @@ static void ShowExampleAppCustomRendering(bool* p_open)
         ImGui::EndTabBar();
     }
 
-    ImGui::End();
+    ImGui::EndScene();
 }
 
 //-----------------------------------------------------------------------------
@@ -7728,7 +7728,7 @@ void ShowExampleAppDockSpace(bool* p_open)
     // any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
     if (!opt_padding)
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-    ImGui::Begin("DockSpace Demo", p_open, window_flags);
+    ImGui::BeginScene("DockSpace Demo", p_open, window_flags);
     if (!opt_padding)
         ImGui::PopStyleVar();
 
@@ -7781,7 +7781,7 @@ void ShowExampleAppDockSpace(bool* p_open)
         ImGui::EndMenuBar();
     }
 
-    ImGui::End();
+    ImGui::EndScene();
 }
 
 //-----------------------------------------------------------------------------
@@ -7900,10 +7900,10 @@ void ShowExampleAppDocuments(bool* p_open)
     // We avoid this problem by submitting our documents window even if our parent window is not currently visible.
     // Another solution may be to make the "Example: Documents" window use the ImGuiWindowFlags_NoDocking.
 
-    bool window_contents_visible = ImGui::Begin("Example: Documents", p_open, ImGuiWindowFlags_MenuBar);
+    bool window_contents_visible = ImGui::BeginScene("Example: Documents", p_open, ImGuiWindowFlags_MenuBar);
     if (!window_contents_visible && opt_target != Target_DockSpaceAndWindow)
     {
-        ImGui::End();
+        ImGui::EndScene();
         return;
     }
 
@@ -8027,7 +8027,7 @@ void ShowExampleAppDocuments(bool* p_open)
 
                 ImGui::SetNextWindowDockID(dockspace_id, redock_all ? ImGuiCond_Always : ImGuiCond_FirstUseEver);
                 ImGuiWindowFlags window_flags = (doc->Dirty ? ImGuiWindowFlags_UnsavedDocument : 0);
-                bool visible = ImGui::Begin(doc->Name, &doc->Open, window_flags);
+                bool visible = ImGui::BeginScene(doc->Name, &doc->Open, window_flags);
 
                 // Cancel attempt to close when unsaved add to save queue so we can display a popup.
                 if (!doc->Open && doc->Dirty)
@@ -8040,7 +8040,7 @@ void ShowExampleAppDocuments(bool* p_open)
                 if (visible)
                     MyDocument::DisplayContents(doc);
 
-                ImGui::End();
+                ImGui::EndScene();
             }
         }
         else
@@ -8052,7 +8052,7 @@ void ShowExampleAppDocuments(bool* p_open)
     // Early out other contents
     if (!window_contents_visible)
     {
-        ImGui::End();
+        ImGui::EndScene();
         return;
     }
 
@@ -8134,7 +8134,7 @@ void ShowExampleAppDocuments(bool* p_open)
         }
     }
 
-    ImGui::End();
+    ImGui::EndScene();
 }
 
 // End of Demo code
