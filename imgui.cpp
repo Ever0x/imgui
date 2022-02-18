@@ -2765,7 +2765,7 @@ bool ImGuiListClipper::Step()
     if (ItemsCount < INT_MAX)
         ImGuiListClipper_SeekCursorForItem(this, ItemsCount);
 
-    End();
+    EndScene();
     return false;
 }
 
